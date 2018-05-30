@@ -33,7 +33,7 @@ namespace WinForms
                 {
                     Circle item = new Circle
                     {
-                        Name = "Circle" + _color + _listShape.Count,
+                        Name = "Circle" + _color.ToKnownColor() + _listShape.Count,
                         Radius = radius,
                         Centre = new Point(_pointX, _pointY),
                         CircleColor = _color
@@ -61,7 +61,7 @@ namespace WinForms
             switch (e.Button)
             {
                 case MouseButtons.Left when textBox1.Text == "":
-                    MessageBox.Show(@"Error! Please enter radius!");
+                    MessageBox.Show(@"Error! Please enter radius!", @"Important Question");
                     break;
 
                 case MouseButtons.Left:
@@ -119,7 +119,7 @@ namespace WinForms
         {
             if (_isSave == false)
             {
-                DialogResult result1 = MessageBox.Show("File is not saved! \nDo you want to save?",
+                DialogResult result1 = MessageBox.Show("File is not saved! \nDo you want to continue?",
                     @"Important Question",
                     MessageBoxButtons.YesNo);
                 if (result1 != DialogResult.Yes) return;
@@ -169,6 +169,11 @@ namespace WinForms
             {
                 Close();
             }
+        }
+
+        private void shapesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
