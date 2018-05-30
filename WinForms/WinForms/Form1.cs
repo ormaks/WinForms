@@ -33,7 +33,7 @@ namespace WinForms
                 {
                     Circle item = new Circle
                     {
-                        Name = "Circle" + _listShape.Count,
+                        Name = "Circle" + _color + _listShape.Count,
                         Radius = radius,
                         Centre = new Point(_pointX, _pointY),
                         CircleColor = _color
@@ -49,7 +49,7 @@ namespace WinForms
                 }
                 else
                 {
-                    MessageBox.Show(@"Error! Radius must be number");
+                    MessageBox.Show(@"Error! Radius must be number", @"Important Question");
                 }
             }
 
@@ -61,7 +61,7 @@ namespace WinForms
             switch (e.Button)
             {
                 case MouseButtons.Left when textBox1.Text == "":
-                    MessageBox.Show(@"Error! Please enter radius");
+                    MessageBox.Show(@"Error! Please enter radius!");
                     break;
 
                 case MouseButtons.Left:
@@ -77,7 +77,7 @@ namespace WinForms
                     break;
 
                 case MouseButtons.Right when _circle == null:
-                    MessageBox.Show(@"Please select circle!");
+                    MessageBox.Show(@"Please select a circle!", @"Important Question");
                     break;
                 
                 case MouseButtons.Right:
@@ -96,12 +96,22 @@ namespace WinForms
 
                     _isSave = false;
                     break;
+                case MouseButtons.None:
+                    break;
+                case MouseButtons.Middle:
+                    break;
+                case MouseButtons.XButton1:
+                    break;
+                case MouseButtons.XButton2:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         private void shapesToolStripMenuItem_DropDownItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
         {
-            string clickedname = e.ClickedItem.Text;
+            var clickedname = e.ClickedItem.Text;
             _circle = _listShape.Find(x => x.Name == clickedname);
         }
 
@@ -109,7 +119,7 @@ namespace WinForms
         {
             if (_isSave == false)
             {
-                DialogResult result1 = MessageBox.Show(@"File is not saved",
+                DialogResult result1 = MessageBox.Show("File is not saved! \nDo you want to save?",
                     @"Important Question",
                     MessageBoxButtons.YesNo);
                 if (result1 != DialogResult.Yes) return;
