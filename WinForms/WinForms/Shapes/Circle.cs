@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinForms.Shapes
@@ -21,8 +17,8 @@ namespace WinForms.Shapes
        
         public int ColorArgb
         {
-            get { return CircleColor.ToArgb(); }
-            set { CircleColor = Color.FromArgb(value); }
+            get => CircleColor.ToArgb();
+            set => CircleColor = Color.FromArgb(value);
         }
 
 
@@ -54,7 +50,7 @@ namespace WinForms.Shapes
             int newCentreX = mouseEvent.X;
             int newCentreY = mouseEvent.Y;
 
-            this.Centre = new Point(newCentreX, newCentreY);
+            Centre = new Point(newCentreX, newCentreY);
         }
     }
 }

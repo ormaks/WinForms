@@ -1,36 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms.Shapes;
 using WinForms.Utils;
-using WinForms.CircleBL;
 
 namespace WinForms
 {
     public partial class Form1 : Form
     {
-        private bool isSave = false;
-        private int pointX = 0;
-        private int pointY = 0;
-        private Graphics graphics;
-        private SolidBrush brush;
-        private List<Circle> listShape = new List<Circle>();
-        private Circle circle;
-        private Color color;
+        private bool _isSave;
+        private int _pointX;
+        private int _pointY;
+        private readonly Graphics _graphics;
+        private SolidBrush _brush;
+        private List<Circle> _listShape = new List<Circle>();
+        private Circle _circle;
+        private Color _color;
 
         public Form1()
         {
             InitializeComponent();
-            graphics = panel1.CreateGraphics();
-
+            _graphics = panel1.CreateGraphics();
         }
-
 
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -39,106 +31,102 @@ namespace WinForms
             {
                 if (int.TryParse(textBox1.Text, out var radius))
                 {
-                    Circle item = new Circle();
-                    item.Name = "Circle" + listShape.Count.ToString();
-                    item.Radius = radius;
-                    item.Centre = new Point(pointX, pointY);
-                    item.CircleColor = color;
+                    Circle item = new Circle
+                    {
+                        Name = "Circle" + _listShape.Count,
+                        Radius = radius,
+                        Centre = new Point(_pointX, _pointY),
+                        CircleColor = _color
+                    };
 
-                    graphics.FillEllipse(brush, pointX - radius, pointY - radius,
-                      radius + radius, radius + radius);
+                    _graphics.FillEllipse(_brush, _pointX - radius, _pointY - radius,
+                        radius + radius, radius + radius);
 
-                    listShape.Add(item);
+                    _listShape.Add(item);
 
                     ToolStripItem subItem = new ToolStripMenuItem(item.Name);
                     shapesToolStripMenuItem.DropDownItems.Add(subItem);
                 }
                 else
                 {
-                    MessageBox.Show("Error! Radius must be number");
+                    MessageBox.Show(@"Error! Radius must be number");
                 }
             }
+
             panel1.BackColor = Color.White;
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            switch (e.Button)
             {
-                if (textBox1.Text == "")
-                {
-                    MessageBox.Show("Error! Please enter radius");
-                }
-                else
-                {
-                    ColorDialog colorDialog = new ColorDialog();
-                    if (colorDialog.ShowDialog() == DialogResult.OK)
-                    {
+                case MouseButtons.Left when textBox1.Text == "":
+                    MessageBox.Show(@"Error! Please enter radius");
+                    break;
 
-                        brush = new SolidBrush(colorDialog.Color);
-                        color = colorDialog.Color;
-                        pointX = e.X;
-                        pointY = e.Y;
-                        isSave = false;
-                        panel1_Paint(this, null);
-                    }
-                }
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                if (circle == null)
-                {
-                    MessageBox.Show("Please select circle!");
-                }
-                else
-                {
-                    listShape.Remove(circle);
-                    circle.Move(e);
-                    listShape.Add(circle);
+                case MouseButtons.Left:
+                    ColorDialog colorDialog = new ColorDialog();
+                    if (colorDialog.ShowDialog() != DialogResult.OK) return;
+
+                    _brush = new SolidBrush(colorDialog.Color);
+                    _color = colorDialog.Color;
+                    _pointX = e.X;
+                    _pointY = e.Y;
+                    _isSave = false;
+                    panel1_Paint(this, null);
+                    break;
+
+                case MouseButtons.Right when _circle == null:
+                    MessageBox.Show(@"Please select circle!");
+                    break;
+                
+                case MouseButtons.Right:
+                    _listShape.Remove(_circle);
+                    _circle.Move(e);
+                    _listShape.Add(_circle);
 
                     textBox1.Clear();
                     panel1.Refresh();
-                    foreach (var it in listShape)
+                    foreach (var it in _listShape)
                     {
-                        graphics.FillEllipse(new SolidBrush(it.CircleColor), it.Centre.X - it.Radius, it.Centre.Y - it.Radius,
-                     it.Radius + it.Radius, it.Radius + it.Radius);
+                        _graphics.FillEllipse(new SolidBrush(it.CircleColor), it.Centre.X - it.Radius,
+                            it.Centre.Y - it.Radius,
+                            it.Radius + it.Radius, it.Radius + it.Radius);
                     }
-                    isSave = false;
-                }
+
+                    _isSave = false;
+                    break;
             }
         }
 
         private void shapesToolStripMenuItem_DropDownItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
         {
             string clickedname = e.ClickedItem.Text;
-            circle = listShape.Find(x => x.Name == clickedname);
+            _circle = _listShape.Find(x => x.Name == clickedname);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (isSave == false)
+            if (_isSave == false)
             {
-                DialogResult result1 = MessageBox.Show("Is Dot Net Perls awesome?",
-    "Important Question",
-    MessageBoxButtons.YesNo);
-                if (result1 == DialogResult.Yes)
-                {
-                    textBox1.Clear();
-                    panel1.Refresh();
-                    listShape.Clear();
-                    shapesToolStripMenuItem.DropDownItems.Clear();
-                    isSave = false;
-                }
+                DialogResult result1 = MessageBox.Show(@"File is not saved",
+                    @"Important Question",
+                    MessageBoxButtons.YesNo);
+                if (result1 != DialogResult.Yes) return;
+                textBox1.Clear();
+                panel1.Refresh();
+                _listShape.Clear();
+                shapesToolStripMenuItem.DropDownItems.Clear();
+                _isSave = false;
             }
             else
             {
                 textBox1.Clear();
                 panel1.Refresh();
-                listShape.Clear();
+                _listShape.Clear();
                 shapesToolStripMenuItem.DropDownItems.Clear();
-                isSave = false;
+                _isSave = false;
             }
-
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -147,10 +135,10 @@ namespace WinForms
             if (openFileDialog.ShowDialog() != DialogResult.OK) return;
             textBox1.Clear();
             panel1.Refresh();
-            listShape = CircleBL.CircleBL.DeserializeList(openFileDialog.FileName);
-            foreach (var it in listShape)
+            _listShape = CircleBL.CircleBL.DeserializeList(openFileDialog.FileName);
+            foreach (var it in _listShape)
             {
-                graphics.FillEllipse(new SolidBrush(it.CircleColor), it.Centre.X - it.Radius, it.Centre.Y - it.Radius,
+                _graphics.FillEllipse(new SolidBrush(it.CircleColor), it.Centre.X - it.Radius, it.Centre.Y - it.Radius,
                     it.Radius + it.Radius, it.Radius + it.Radius);
             }
         }
@@ -159,12 +147,10 @@ namespace WinForms
         {
             SaveFileDialog saveFileDialog = UI.CreateSaveFile();
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                CircleBL.CircleBL.SerializeList(listShape, saveFileDialog.FileName);
-                isSave = true;
-            }
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
 
+            CircleBL.CircleBL.SerializeList(_listShape, saveFileDialog.FileName);
+            _isSave = true;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

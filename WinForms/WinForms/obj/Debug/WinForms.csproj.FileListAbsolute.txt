@@ -8,3 +8,13 @@ C:\Users\maksc\source\repos\WinForms\WinForms\obj\Debug\WinForms.csproj.Generate
 C:\Users\maksc\source\repos\WinForms\WinForms\obj\Debug\WinForms.csproj.CoreCompileInputs.cache
 C:\Users\maksc\source\repos\WinForms\WinForms\obj\Debug\WinForms.exe
 C:\Users\maksc\source\repos\WinForms\WinForms\obj\Debug\WinForms.pdb
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\bin\Debug\WinForms.exe.config
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\bin\Debug\WinForms.exe
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\bin\Debug\WinForms.pdb
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.csprojAssemblyReference.cache
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.Form1.resources
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.Properties.Resources.resources
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.csproj.GenerateResource.cache
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.csproj.CoreCompileInputs.cache
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.exe
+D:\Навчання\2Курс_2Сем\WinForms\WinForms\WinForms\obj\Debug\WinForms.pdb

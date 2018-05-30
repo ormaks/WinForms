@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace WinForms.Utils
 {
@@ -38,8 +33,8 @@ namespace WinForms.Utils
 
         public static DialogResult CreateInformationWindow()
         {
-            string caption = "Information box";
-            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            const string caption = "Information box";
+            const MessageBoxButtons buttons = MessageBoxButtons.OK;
 
             return MessageBox.Show(INFORMATION_MESSAGE, caption, buttons);
         }
@@ -51,7 +46,7 @@ namespace WinForms.Utils
                 RestoreDirectory = true,
                 DefaultExt = "xml",
                 CheckPathExists = true,
-                Title = "Save",
+                Title = @"Save",
                 ValidateNames = true
             };
 
@@ -62,11 +57,11 @@ namespace WinForms.Utils
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "(*.xml)|*.xml",
+                Filter = @"(*.xml)|*.xml",
                 RestoreDirectory = true,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Title = "Choose file"
+                Title = @"Choose file"
             };
 
             return openFileDialog;
